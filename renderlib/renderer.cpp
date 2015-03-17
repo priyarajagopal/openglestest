@@ -1,9 +1,6 @@
 #include "renderer.h"
+#include "logging.h"
 #include <glm/gtc/type_ptr.hpp>
-
-#include <android/log.h>
-
-#define APPNAME "renderLib"
 
 using namespace renderlib;
 
@@ -33,7 +30,7 @@ GLuint vbo = 0;
 void checkGLError(const char* op) {
     int error;
     while ((error = glGetError()) != GL_NO_ERROR) {
-		__android_log_print(ANDROID_LOG_ERROR, APPNAME, "glError (%s) : %d", op, error);
+		LOG("glError (%s) : %d", op, error);
     }
 }
 

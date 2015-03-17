@@ -1,10 +1,7 @@
 #include "viewer.h"
+#include "logging.h"
 
 using namespace renderlib;
-
-#include <android/log.h>
-
-#define APPNAME "renderLib"
 
 Viewer::Viewer()
 {
@@ -17,13 +14,13 @@ Viewer::~Viewer()
 
 void Viewer::init()
 {
-	__android_log_write(ANDROID_LOG_ERROR, APPNAME, "init");
+	LOGW("init");
 	renderer_.init();
 }
 
 void Viewer::set_viewport(int x, int y, int w, int h)
 {
-	__android_log_print(ANDROID_LOG_ERROR, APPNAME, "set_viewport %d %d %d %d", x, y, w, h);
+	LOG("set_viewport %d %d %d %d", x, y, w, h);
 	viewport_x = x;
 	viewport_y = y;
 	viewport_w = w;

@@ -1,10 +1,7 @@
 #include <iostream>
 #include "shaders.h"
 #include "shader_programs.h"
-
-#include <android/log.h>
-
-#define APPNAME "renderLib"
+#include "logging.h"
 
 using namespace renderlib;
 
@@ -36,9 +33,8 @@ void ShaderProgram::dump_compile_log_for(GLuint id)
     char* log = new char[10000];
     int len;
     glGetShaderInfoLog(id, 10000, &len, log);
-	__android_log_write(ANDROID_LOG_ERROR, APPNAME, "Dumping error log");
-	__android_log_write(ANDROID_LOG_ERROR, APPNAME, log);
-    //std::cerr << "dumping log" << std::endl << log << std::endl;
+	LOGW("Dumping error log");
+	LOGW(log);
     delete[] log;
 }
 
@@ -54,7 +50,6 @@ void ShaderProgram::compile_shader_pair(const char* vertex_shader_src, const cha
     GLint status;
     glGetProgramiv(program_id_, GL_LINK_STATUS, &status);
     if (status == 0) {
-		__android_log_write(ANDROID_LOG_ERROR, APPNAME, "Could not link shader program");
         throw ShaderException("Could not link shader program");
     }
 }
@@ -86,7 +81,6 @@ GLint ShaderProgram::get_uniform(const char* uniform_name)
 {
     GLint result = glGetUniformLocation(program_id(), uniform_name);
     if (result == -1) {
-		__android_log_print(ANDROID_LOG_ERROR, APPNAME, "Could not find uniform %s", uniform_name);
         throw ShaderException("Could not find uniform");
     }
     return result;
@@ -96,7 +90,6 @@ GLint ShaderProgram::get_attribute(const char* attribute_name)
 {
     GLint result = glGetAttribLocation(program_id(), attribute_name);
     if (result == -1) {
-		__android_log_print(ANDROID_LOG_ERROR, APPNAME, "Could not find attribute %s", attribute_name);
         throw ShaderException("Could not find attribute");
     }
     glEnableVertexAttribArray(result);

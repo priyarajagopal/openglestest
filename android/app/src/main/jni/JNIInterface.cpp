@@ -5,22 +5,47 @@ using namespace renderlib;
 
 Viewer* viewer = 0;
 
-JNIEXPORT void JNICALL Java_com_invicara_androidtest_JNIInterface_on_1surface_1created(JNIEnv *, jclass) 
+void throwJavaException(JNIEnv* env, const char* msg)
 {
-    if (viewer)
-        delete viewer;
-    viewer = new Viewer();
-    viewer->init();
+    jclass exClass = env->FindClass("java/lang/Error");
+    if (exClass != NULL)
+        env->ThrowNew(exClass, msg);
 }
 
-JNIEXPORT void JNICALL Java_com_invicara_androidtest_JNIInterface_on_1surface_1changed(JNIEnv *, jclass, jint width, jint height)
+JNIEXPORT void JNICALL Java_com_invicara_androidtest_JNIInterface_on_1surface_1created(JNIEnv* env, jclass) 
 {
-    if (viewer)
-        viewer->set_viewport(0, 0, width, height);
+    try {
+        if (viewer)
+            delete viewer;
+        viewer = new Viewer();
+        viewer->init();
+    } catch (const std::exception& e) {
+        throwJavaException(env, e.what());
+    } catch (...) {
+        throwJavaException(env, "Unhandled exception from renderLib");
+    }    
 }
 
-JNIEXPORT void JNICALL Java_com_invicara_androidtest_JNIInterface_on_1draw_1frame(JNIEnv *, jclass) 
+JNIEXPORT void JNICALL Java_com_invicara_androidtest_JNIInterface_on_1surface_1changed(JNIEnv* env, jclass, jint width, jint height)
 {
-    if (viewer)
-        viewer->draw();
+    try {
+        if (viewer)
+            viewer->set_viewport(0, 0, width, height);
+    } catch (const std::exception& e) {
+        throwJavaException(env, e.what());
+    } catch (...) {
+        throwJavaException(env, "Unhandled exception from renderLib");
+    }            
+}
+
+JNIEXPORT void JNICALL Java_com_invicara_androidtest_JNIInterface_on_1draw_1frame(JNIEnv* env, jclass) 
+{
+    try {
+        if (viewer)
+            viewer->draw();
+    } catch (const std::exception& e) {
+        throwJavaException(env, e.what());
+    } catch (...) {
+        throwJavaException(env, "Unhandled exception from renderLib");
+    }            
 }
