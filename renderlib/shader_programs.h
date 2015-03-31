@@ -51,4 +51,14 @@ public:
     GLint uMVPMatrix, aPosition, aColor;
 };
 
+class RegularShaderProgram : public ShaderProgram {
+public:
+    RegularShaderProgram();
+
+    GLint uMVPMatrix, 
+		aPosition, aNormal, aColor,
+		uAmbientColor, 
+		uLight0Dir, uLight0Clr, uLight1Dir, uLight1Clr, uLight2Dir, uLight2Clr;
+};
+
 }

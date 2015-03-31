@@ -2,6 +2,7 @@
 
 #include "shader_programs.h"
 #include "camera.h"
+#include "element_manager.h"
 
 namespace renderlib {
 
@@ -11,9 +12,10 @@ public:
 	Renderer();
 	~Renderer();
 	void init();
-	void render(Camera& camera);
+	void render(Camera& camera, ElementManager& element_manager);
 private:
-	SimpleShaderProgram simple_shader_;
+	//SimpleShaderProgram shader_;
+	RegularShaderProgram shader_;
 };
 
 }

@@ -1,6 +1,6 @@
 #include "shaders.h"
 
-const char VERTEX_SHADER[] = 
+const char SIMPLE_VERTEX_SHADER[] = 
 "uniform mat4 uMVPMatrix;"
 "attribute vec3 aPosition;"
 "attribute vec4 aColor;"
@@ -13,10 +13,57 @@ const char VERTEX_SHADER[] =
 "	gl_Position = uMVPMatrix * vec4(aPosition, 1.0);"
 "}";
 
-const char FRAGMENT_SHADER[] =
+const char SIMPLE_FRAGMENT_SHADER[] =
 "varying vec4 vColor;"
 "\n"
 "void main()"
 "{"
 "	gl_FragColor = vColor;"
+"}";
+
+const char REGULAR_VERTEX_SHADER[] = 
+"#ifdef GL_ES\n"
+"precision highp float;\n"
+"#endif\n"
+"uniform mat4 uMVPMatrix;"
+"attribute vec3 aPosition;"
+"attribute vec3 aNormal;"
+"attribute vec4 aColor;"
+""
+"uniform vec3 uAmbientColor;"
+"uniform vec3 uLight0Dir;"
+"uniform vec3 uLight0Clr;"
+"uniform vec3 uLight1Dir;"
+"uniform vec3 uLight1Clr;"
+"uniform vec3 uLight2Dir;"
+"uniform vec3 uLight2Clr;"
+"" 
+"varying vec4 vColor;"
+"varying vec3 vLightingWeights;"
+"\n"
+"void main()"
+"{"
+"	gl_Position = uMVPMatrix * vec4(aPosition, 1.0);"
+"	vColor = aColor;"
+""
+"   float light0weight = abs(dot(aNormal, uLight0Dir));"
+"   float light1weight = abs(dot(aNormal, uLight1Dir));"
+"   float light2weight = abs(dot(aNormal, uLight2Dir));"
+"   vLightingWeights = (light0weight * uLight0Clr)"
+"    + (light1weight * uLight1Clr) "
+"    + (light2weight * uLight2Clr) "
+"    + uAmbientColor;"
+"}";
+
+const char REGULAR_FRAGMENT_SHADER[] =
+"#ifdef GL_ES\n"
+"precision highp float;\n"
+"#endif\n"
+"varying vec4 vColor;"
+"varying vec3 vLightingWeights;"
+"\n"
+"void main()"
+"{"
+"	gl_FragColor.rgb = vLightingWeights.rgb * vColor.rgb;"
+"   gl_FragColor.a = vColor.a;"
 "}";

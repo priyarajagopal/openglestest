@@ -1,5 +1,6 @@
 #include "renderer.h"
 #include "logging.h"
+#include "gles.h"
 #include <glm/gtc/type_ptr.hpp>
 
 using namespace renderlib;
@@ -12,21 +13,6 @@ Renderer::~Renderer()
 {
 }
 
-const float vbo_data[] = {
-	// x, y, z,
-	// r, g, b, a
-	-1.0f, -1.0f, 0.0f,
-	1.0f, 0.0f, 0.0f, 1.0f,
-
-	1.0f, -1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f, 1.0f,
-
-	0.0f,  1.0f, 0.0f,
-	0.0f,  0.0f, 1.0f, 1.0f
-};
-
-GLuint vbo = 0;
-
 void checkGLError(const char* op) {
     int error;
     while ((error = glGetError()) != GL_NO_ERROR) {
@@ -37,28 +23,44 @@ void checkGLError(const char* op) {
 void Renderer::init()
 {
     glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glClearColor(0.5f, 0.5f, 0.5f, 0.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//char* strExt = (char*) glGetString(GL_EXTENSIONS); 
+	//LOG("Extensions : %s", strExt);
+
+	glUseProgram(shader_.program_id());
+
+    glUniform3f(shader_.uAmbientColor, 0.4f, 0.4f, 0.4f);
+    glUniform3f(shader_.uLight0Dir, 0.0f, 0.0f, 1.0f);
+    glUniform3f(shader_.uLight0Clr, 0.0f, 0.0f, 0.0f);
+
+	glm::vec3 dir1(1,2,1);
+	dir1 = glm::normalize(dir1);
+    glUniform3f(shader_.uLight1Dir, dir1.x, dir1.y, dir1.z);
+    glUniform3f(shader_.uLight1Clr, 0.5f, 0.5f, 0.5f);
+
+	glm::vec3 dir2(-1,-1,7);
+	dir2 = glm::normalize(dir2);
+    glUniform3f(shader_.uLight2Dir, dir2.x, dir2.y, dir2.z);
+    glUniform3f(shader_.uLight2Clr, 0.5f, 0.5f, 0.5f);
     
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vbo_data), vbo_data, GL_STATIC_DRAW);
 	checkGLError("init");
 }
 
-void Renderer::render(Camera& camera)
+void Renderer::render(Camera& camera, ElementManager& element_manager)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glUseProgram(simple_shader_.program_id());
-
+	
 	glm::mat4 mvp_mat = camera.get_projection_matrix() * camera.get_view_matrix();
-	glUniformMatrix4fv(simple_shader_.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(mvp_mat));
+	glUniformMatrix4fv(shader_.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(mvp_mat));
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glVertexAttribPointer(simple_shader_.aPosition, 3, GL_FLOAT, GL_FALSE, 7 * 4, (void*)0);
-	glVertexAttribPointer(simple_shader_.aColor, 4, GL_FLOAT, GL_FALSE, 7 * 4, (void*)(3 * 4));
+	for (BufferPtr& buffer : element_manager.buffers)
+	{
+		buffer->draw(shader_.aPosition, shader_.aNormal, shader_.aColor);
+	}
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
 	checkGLError("render");
 }

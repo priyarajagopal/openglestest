@@ -1,2 +1,8 @@
 android/app/src/main/obj/
 android/.idea/
+windows/renderLib/x64/
+windows/ipch/
+windows/x64/
+*.opensdf
+*.sdf
+*.suo

@@ -9,6 +9,6 @@
 #else
 #include <stdio.h>
 
-#define  LOG(...) fprintf(stderr, __VA_ARGS__)
-#define  LOGW(...) fprintf(stderr, __VA_ARGS__)
+#define  LOG(...) fprintf(stderr, __VA_ARGS__); fprintf(stderr, "\n");
+#define  LOGW(...) fprintf(stderr, __VA_ARGS__); fprintf(stderr, "\n");
 #endif

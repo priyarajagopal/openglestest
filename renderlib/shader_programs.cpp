@@ -98,8 +98,24 @@ GLint ShaderProgram::get_attribute(const char* attribute_name)
 
 SimpleShaderProgram::SimpleShaderProgram()
 {
-	compile_shader_pair(VERTEX_SHADER, FRAGMENT_SHADER);
+	compile_shader_pair(SIMPLE_VERTEX_SHADER, SIMPLE_FRAGMENT_SHADER);
 	uMVPMatrix = get_uniform("uMVPMatrix");
 	aPosition = get_attribute("aPosition");
 	aColor = get_attribute("aColor");
+}
+
+RegularShaderProgram::RegularShaderProgram()
+{
+	compile_shader_pair(REGULAR_VERTEX_SHADER, REGULAR_FRAGMENT_SHADER);
+	uMVPMatrix = get_uniform("uMVPMatrix");
+	aPosition = get_attribute("aPosition");
+	aNormal = get_attribute("aNormal");
+	aColor = get_attribute("aColor");
+	uAmbientColor = get_uniform("uAmbientColor");
+	uLight0Dir = get_uniform("uLight0Dir");
+	uLight0Clr = get_uniform("uLight0Clr");
+	uLight1Dir = get_uniform("uLight1Dir");
+	uLight1Clr = get_uniform("uLight1Clr");
+	uLight2Dir = get_uniform("uLight2Dir");
+	uLight2Clr = get_uniform("uLight2Clr");
 }
