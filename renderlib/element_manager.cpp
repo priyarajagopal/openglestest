@@ -1,129 +1,112 @@
 #include "element_manager.h"
 #include <memory>
-#include <sstream>
-#include "rapidjson/document.h"
+#include <mutex>
+#include <thread>
+#include <chrono>
 #include "logging.h"
+#include "model_loader.h"
 
 using namespace renderlib;
 
-ElementManager::ElementManager()
+#define LOAD_DURING_RENDER_MAX_DURATION 20
+
+ElementManager::ElementManager():
+	current_opaque_buffer(nullptr), current_transparent_buffer(nullptr),
+	loading(false)
 {
 }
-
 
 ElementManager::~ElementManager()
 {
 }
 
-ParsedGeometryPtr parseJsonGeometry(rapidjson::Value& jGeom)
+std::mutex parsed_elements_mutex;
+
+void ElementManager::add_shared_geom(const SharedGeomId& id, const ParsedGeometryPtrList& geometries)
 {
-	ParsedGeometryPtr parsedGeom = nullptr;
-	if (jGeom.HasMember("ref"))	
-	{
-		auto& jMatrix = jGeom["matrix"];
-		float mat[16];
-		for (int i=0; i < 16; i++)
-			mat[i] = jMatrix[i].GetDouble();
-		parsedGeom = new ParsedGeometry(jGeom["ref"].GetString(), mat);
-
-		//LOG(">>>>geom ref[%s]", parsedGeom->ref);
-		//LOG(">>>>geom matrix[%s]", ss.str().c_str());
-	}
-	else 
-	{
-		int type = jGeom["type"].GetInt();
-		if (type == 0)	// ignore lines for now
-		{
-			parsedGeom = new ParsedGeometry(
-				jGeom.HasMember("color") ? RGBA(jGeom["color"].GetUint()) : RGBA(255, 255, 255, 255),
-				jGeom["type"].GetInt(),
-				jGeom["data"].GetString());
-		}
-
-		//LOG(">>>>geom type[%d]", parsedGeom->type);
-		//LOG(">>>>geom color[%d,%d,%d,%d]", parsedGeom->color.r(), parsedGeom->color.g(), parsedGeom->color.b(), parsedGeom->color.a());
-	}
-	return parsedGeom;
+	shared_geoms.addSharedGeom(id, geometries);
 }
 
-ParsedGeometryPtrList parseJsonGeometryArray(rapidjson::Value& jGeoms)
+void ElementManager::queue_parse_element(ParsedElementPtr elem)
 {
-	ParsedGeometryPtrList geometries;
-	for (rapidjson::SizeType j = 0; j < jGeoms.Size(); j++)	
-	{
-		auto& jGeom = jGeoms[j];
-		ParsedGeometryPtr parsedGeom = parseJsonGeometry(jGeom);
-		if (parsedGeom)
-			geometries.push_back(parsedGeom);
-	}
-	return geometries;
+	std::lock_guard<std::mutex> lock(parsed_elements_mutex);
+	parsed_elements.push_back(elem);
 }
 
-bool ElementManager::load_model_data(const char* data)
+void ElementManager::set_loading(bool l)
 {
-	rapidjson::Document doc;
-	doc.Parse(data);
-
-	if (doc.HasMember("sharedGeometries"))
-	{
-		LOGW("Parsing sharedGeometries");
-		auto& jSharedGeometries = doc["sharedGeometries"];
-		for (rapidjson::SizeType i = 0; i < jSharedGeometries.Size(); i++)
-		{
-			auto& jSharedGeom = jSharedGeometries[i];
-			const char* elementId = jSharedGeom["id"].GetString();
-			LOG(">>SharedGeom id[%s]", elementId);
-			ParsedGeometryPtrList geometries = parseJsonGeometryArray(jSharedGeom["geometry"]);
-			shared_geoms.addSharedGeom(elementId, geometries);
-		}
-	}
-
-	if (doc.HasMember("geometries"))
-	{
-		LOGW("Parsing elements");
-		auto& jElements = doc["geometries"];
-		for (rapidjson::SizeType i = 0; i < jElements.Size(); i++)
-		{
-			ParsedElementPtr elem = new ParsedElement();
-			auto& jElement = jElements[i];
-			const char* elementId = jElement["elementId"].GetString();
-
-			LOG(">>Element id[%s]", elementId);
-			elem->element_id = elementId;
-			elem->geometries = parseJsonGeometryArray(jElement["geometry"]);
-			parsed_elements.push_back(elem);
-		}
-	}
-
-	processParsedElements();
-
-	return true;
+	loading = l;
 }
 
-void ElementManager::addGeomToBuffer(BufferPtr& buffer, const ParsedGeometryPtr& geom, const glm::mat4& mat)
+void ElementManager::load_model(const char* url)
 {
+	std::thread t(&ElementManager::thread_load_model, this, url);
+	t.detach();
+}
+
+void ElementManager::thread_load_model(const std::string url)
+{
+	set_loading(true);
+	ModelLoader loader(this);
+	loader.load_url(url.c_str());
+	loader.wait_until_done();
+	set_loading(false);
+}
+
+BufferPtr* ElementManager::allocate_buffer(bool transparent)
+{
+	BufferPtr* buffer = transparent ? &current_transparent_buffer : &current_opaque_buffer;
+	if (*buffer == nullptr)
+		*buffer = std::make_shared<Buffer>();
+	return buffer;
+}
+
+BufferOffset ElementManager::add_geom_to_buffer(const ParsedGeometryPtr& geom, const glm::mat4& mat)
+{
+	BufferPtr* buffer = allocate_buffer(geom->color.is_transparent());
+	BufferOffset offset;
+
 	bool added = false;
 	while (!added)
 	{
-		added = buffer->add_ctm_data(geom->ctm, mat, geom->color, bbox);
-		if (!added)
+		added = (*buffer)->add_ctm_data(geom->ctm, mat, geom->color, bbox, offset);
+		if (added)
+			offset.buffer = *buffer;
+		else
 		{
-			buffer->load_buffers();
-			buffers.push_back(buffer);
-			buffer = std::make_shared<Buffer>();
+			(*buffer)->load_buffers();
+			buffers.push_back(*buffer);
+			*buffer = nullptr;
+			buffer = allocate_buffer(geom->color.is_transparent());
 		}
+	}
+	
+	return offset;
+}
+
+ParsedElementPtr ElementManager::get_next_parsed_element()
+{
+	std::lock_guard<std::mutex> lock(parsed_elements_mutex);
+	if (parsed_elements.empty())
+		return nullptr;
+	else
+	{
+		ParsedElementPtr element = parsed_elements.front();
+		parsed_elements.pop_front();
+		return element;
 	}
 }
 
-void ElementManager::processParsedElements()
+void ElementManager::process_parsed_elements()
 {
-	auto currentBuffer = std::make_shared<Buffer>();
+	auto start = std::chrono::high_resolution_clock::now();
 
-	while (!parsed_elements.empty())
+	ParsedElementPtr pElement;
+	while ((pElement = get_next_parsed_element()) != nullptr)
 	{
-		auto element = parsed_elements.front();
+		ElementPtr element = std::make_shared<Element>(pElement->element_id, pElement->type);
 
-		for (auto& geom : element->geometries)
+		for (auto& geom : pElement->geometries)
 		{
 			if (geom->is_ref)
 			{
@@ -131,24 +114,44 @@ void ElementManager::processParsedElements()
 				if (shared_geoms.getSharedGeom(geom->ref, geoms))
 				{
 					for (auto& shared_geom : geoms)
-						addGeomToBuffer(currentBuffer, shared_geom, geom->matrix);
+					{
+						GeometryPtr geometry = std::make_shared<Geometry>(shared_geom->color, shared_geom->type);
+						geometry->buffer_offset = add_geom_to_buffer(shared_geom, geom->matrix);
+						element->geometries.push_back(geometry);
+					}
 				}
 			}
 			else
 			{
-				addGeomToBuffer(currentBuffer, geom, glm::mat4(1.0));
+				GeometryPtr geometry = std::make_shared<Geometry>(geom->color, geom->type);
+				geometry->buffer_offset = add_geom_to_buffer(geom, glm::mat4(1.0));
+				element->geometries.push_back(geometry);
 			}
 		}
+		elements[element->element_id] = element;
+		delete pElement;
 
-		delete element;
-		parsed_elements.pop_front();
+		auto end = std::chrono::high_resolution_clock::now();
+		auto dur_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+		if (dur_ms.count() > LOAD_DURING_RENDER_MAX_DURATION)
+			break;
 	}
 
-	if (!currentBuffer->is_loaded())
+	// this section must run only when there is no more data coming
+	if (!is_loading() && parsed_elements.empty())
 	{
-		currentBuffer->load_buffers();
-		buffers.push_back(currentBuffer);
+		if (current_opaque_buffer && !current_opaque_buffer->is_loaded())
+		{
+			current_opaque_buffer->load_buffers();
+			buffers.push_back(current_opaque_buffer);
+			current_opaque_buffer = nullptr;
+		}
+		if (current_transparent_buffer && !current_transparent_buffer->is_loaded())
+		{
+			current_transparent_buffer->load_buffers();
+			buffers.push_back(current_transparent_buffer);
+			current_transparent_buffer = nullptr;
+		}
+		shared_geoms.clear();
 	}
-
-	shared_geoms.clear();
 }

@@ -17,6 +17,9 @@ Buffer::Buffer():
 Buffer::~Buffer()
 {
 	clear_buffers();
+	unbind();
+	GLuint buffers[] = {vertex_buffer_id, index_buffer_id};
+	glDeleteBuffers(2, buffers);
 }
 
 void Buffer::bind()
@@ -41,7 +44,7 @@ void Buffer::update_buffer_count()
 	buf_index_count = index_buffer.size();
 }
 
-bool Buffer::add_ctm_data(CTMDecoder& ctm, const glm::mat4& matrix, const RGBA& color, Box& bbox)
+bool Buffer::add_ctm_data(CTMDecoder& ctm, const glm::mat4& matrix, const RGBA& color, Box& bbox, BufferOffset& offset)
 {
 	auto vertCnt = ctm.get_vertex_count();
 	auto triCnt = ctm.get_tri_count();
@@ -52,11 +55,18 @@ bool Buffer::add_ctm_data(CTMDecoder& ctm, const glm::mat4& matrix, const RGBA& 
 	if ((buf_vertex_count + vertCnt) > MAX_VERTEX_COUNT || (buf_index_count + indexCnt) > MAX_INDEX_COUNT)
 		return false;
 
-	//vertex_buffer.reserve(buf_vertex_count + vertCnt);
-	//index_buffer.reserve(buf_index_count + indexCnt);
+	vertex_buffer.reserve(buf_vertex_count + vertCnt);
+	index_buffer.reserve(buf_index_count + indexCnt);
+
+	transparent = color.is_transparent();
 
 	const float* ctm_vertices = ctm.get_vertices();
 	const unsigned int* ctm_indices = ctm.get_indices();
+
+	offset.vertex_offset = buf_vertex_count;
+	offset.vertex_count = vertCnt;
+	offset.index_offset = buf_index_count;
+	offset.index_count = indexCnt;
 
 	for (unsigned int i=0; i < vertCnt; i++)
 	{
@@ -94,9 +104,7 @@ bool Buffer::add_ctm_data(CTMDecoder& ctm, const glm::mat4& matrix, const RGBA& 
 		glm::vec3 p0(vertex_buffer[i0].position[0], vertex_buffer[i0].position[1], vertex_buffer[i0].position[2]);
 		glm::vec3 p1(vertex_buffer[i1].position[0], vertex_buffer[i1].position[1], vertex_buffer[i1].position[2]);
 		glm::vec3 p2(vertex_buffer[i2].position[0], vertex_buffer[i2].position[1], vertex_buffer[i2].position[2]);
-		glm::vec3 va = p1 - p0;
-		glm::vec3 vb = p2 - p0;
-		glm::vec3 norm = glm::normalize(glm::cross(va, vb));
+		glm::vec3 norm = glm::cross((p1 - p0), (p2 - p0));
 		
 		vertex_buffer[i0].normal[0] += norm.x;
 		vertex_buffer[i0].normal[1] += norm.y;

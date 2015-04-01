@@ -1,30 +1,22 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "color.h"
 #include "buffer.h"
 
 namespace renderlib {
 
-struct BufferRef
-{
-	BufferPtr buffer;
-	uint32_t vertex_offset;
-	size_t vertex_count;
-	uint32_t index_offset;
-	size_t index_count;
-};
-
 class Geometry
 {
 public:
-	Geometry();
+	Geometry(const RGBA& color_, uint8_t type_);
 	~Geometry();
 
 	RGBA color;
 	uint8_t type;	// 0: triangles, 1: lines
 
-	BufferRef buffer_ref;
+	BufferOffset buffer_offset;
 };
 
 typedef std::shared_ptr<Geometry> GeometryPtr;

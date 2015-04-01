@@ -125,16 +125,17 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\renderlib;glew-1.12.0\include;glfw-3.1.1\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>glfw-3.1.1\lib-vc2012;glew-1.12.0\lib\Release\x64;openctm</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3dll.lib;glew32.lib;openctm.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>glfw-3.1.1\lib-vc2012;glew-1.12.0\lib\Release\x64;openctm;libcurl-7.40.0\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3dll.lib;glew32.lib;openctm.lib;libcurl.x64.lib;libssh2.x64.lib;openssl.x64.lib;zlib.x64.lib;wsock32.lib;wldap32.lib;ws2_32.lib;advapi32.lib;gdi32.lib;user32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

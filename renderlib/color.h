@@ -25,6 +25,11 @@ public:
     uint8_t g() const { return g_; }
     uint8_t b() const { return b_; }
 	uint8_t a() const { return a_; }
+
+	bool is_transparent() const		
+	{
+		return (a_ < 255);
+	}
 private:
 	uint8_t r_, g_, b_, a_;
 };

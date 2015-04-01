@@ -14,6 +14,11 @@ Box::Box(const glm::vec3& minp, const glm::vec3& maxp):
 {
 }
 
+Box::Box(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax):
+	minpos(xmin, ymin, zmin), maxpos(xmax, ymax, zmax)
+{
+}
+
 void Box::add_point(const glm::vec3& pos)
 {
 	minpos = glm::min(pos, minpos);

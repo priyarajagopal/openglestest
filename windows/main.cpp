@@ -7,6 +7,8 @@
 using namespace renderlib;
 
 GLFWwindow* window = 0;
+const int window_w = 640;
+const int window_h = 480;
 
 static void error_callback(int error, const char* description)
 {
@@ -26,7 +28,7 @@ void init()
         exit(EXIT_FAILURE);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
-	window = glfwCreateWindow(640, 480, "Test renderLib", NULL, NULL);
+	window = glfwCreateWindow(window_w, window_h, "Test renderLib", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -53,7 +55,9 @@ int main()
 
     Viewer* viewer = new Viewer();
     viewer->init();
-	viewer->set_viewport(0, 0, 640, 480);
+	viewer->set_viewport(0, 0, window_w, window_h);
+	viewer->fit_camera_to_box(-14.401161193847656,-9.856366157531738,-1.0,15.459482192993164,19.143634796142578,28.825000762939453);
+	viewer->load_model("http://localhost:8081/models/SampleHouseTest/14.0.json");
     
 	while (!glfwWindowShouldClose(window))
     {

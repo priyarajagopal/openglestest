@@ -3,8 +3,7 @@
 #include "renderer.h"
 #include "camera.h"
 #include "element_manager.h"
-
-#include "SampleHouse.h"
+#include "box.h"
 
 using namespace renderlib;
 
@@ -25,8 +24,6 @@ void Viewer::init()
 {
 	LOGW("init");
 	renderer->init();
-	
-	load_model_data(sample_house_json().c_str());
 }
 
 void Viewer::set_viewport(int x, int y, int w, int h)
@@ -43,11 +40,16 @@ void Viewer::set_viewport(int x, int y, int w, int h)
 void Viewer::draw()
 {
 	renderer->render(camera, *element_manager);
+	element_manager->process_parsed_elements();
 }
 
-bool Viewer::load_model_data(const char* data)
+bool Viewer::load_model(const char* url)
 {
-	element_manager->load_model_data(data);
-	camera.zoom_box(element_manager->bbox);
+	element_manager->load_model(url);
 	return true;
+}
+
+void Viewer::fit_camera_to_box(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax)
+{
+	camera.zoom_box(Box(xmin, ymin, zmin, xmax, ymax, zmax));
 }

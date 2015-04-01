@@ -118,7 +118,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>OPENGL_GLEW;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;OPENGL_GLEW;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\renderlib;$(SolutionDir)\..\renderlib\openctm;$(SolutionDir)\glew-1.12.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -141,6 +141,7 @@
     <ClInclude Include="..\..\renderlib\geometry.h" />
     <ClInclude Include="..\..\renderlib\gles.h" />
     <ClInclude Include="..\..\renderlib\logging.h" />
+    <ClInclude Include="..\..\renderlib\model_loader.h" />
     <ClInclude Include="..\..\renderlib\renderer.h" />
     <ClInclude Include="..\..\renderlib\SampleHouse.h" />
     <ClInclude Include="..\..\renderlib\shaders.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="..\..\renderlib\element.cpp" />
     <ClCompile Include="..\..\renderlib\element_manager.cpp" />
     <ClCompile Include="..\..\renderlib\geometry.cpp" />
+    <ClCompile Include="..\..\renderlib\model_loader.cpp" />
     <ClCompile Include="..\..\renderlib\renderer.cpp" />
     <ClCompile Include="..\..\renderlib\shaders.cpp" />
     <ClCompile Include="..\..\renderlib\shader_programs.cpp" />

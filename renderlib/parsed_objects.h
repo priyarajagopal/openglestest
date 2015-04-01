@@ -39,18 +39,20 @@ public:
 	ParsedElement();
 	~ParsedElement();
 	ElementId element_id;
+	uint8_t type;	// 1: space, 0: others
 	ParsedGeometryPtrList geometries;
 };
 typedef ParsedElement* ParsedElementPtr;
 
-typedef std::map<ElementId, ParsedGeometryPtrList> SharedGeometriesMap;
+typedef std::string SharedGeomId;
+typedef std::map<SharedGeomId, ParsedGeometryPtrList> SharedGeometriesMap;
 class SharedGeometries
 {
 public:
 	SharedGeometries();
 	~SharedGeometries();
-	void addSharedGeom(const ElementId& id, const ParsedGeometryPtrList& geoms);
-	bool getSharedGeom(const ElementId& id, ParsedGeometryPtrList& geoms);
+	void addSharedGeom(const SharedGeomId& id, const ParsedGeometryPtrList& geoms);
+	bool getSharedGeom(const SharedGeomId& id, ParsedGeometryPtrList& geoms);
 	void clear();
 
 private:

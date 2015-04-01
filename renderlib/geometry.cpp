@@ -2,11 +2,10 @@
 
 using namespace renderlib;
 
-Geometry::Geometry():
-	color(255,255,255,255), type(0)
+Geometry::Geometry(const RGBA& color_, uint8_t type_):
+	color(color_), type(type_)
 {
 }
-
 
 Geometry::~Geometry()
 {

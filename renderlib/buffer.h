@@ -18,17 +18,21 @@ struct VertexStruct
 
 typedef uint32_t IndexType;
 
+struct BufferOffset;
+
 class Buffer
 {
 public:
 	Buffer();
 	~Buffer();
 
-	bool add_ctm_data(CTMDecoder&  ctm, const glm::mat4& matrix, const RGBA& color, Box& bbox);
+	bool add_ctm_data(CTMDecoder&  ctm, const glm::mat4& matrix, const RGBA& color, 
+		Box& bbox, BufferOffset& offset);
 	void load_buffers();
 	void draw(GLint position_id, GLint normal_id, GLint color_id);
-	bool is_loaded() { return loaded; }
+	bool is_loaded() const { return loaded; }
 	void clear_buffers();
+	bool is_transparent() const { return transparent; }
 
 private:
 	void bind();
@@ -52,6 +56,15 @@ private:
 
 typedef std::shared_ptr<Buffer> BufferPtr;
 typedef std::vector<BufferPtr> BufferPtrList;
+
+struct BufferOffset
+{
+	BufferPtr buffer;
+	uint32_t vertex_offset;
+	size_t vertex_count;
+	uint32_t index_offset;
+	size_t index_count;
+};
 
 }
 

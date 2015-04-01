@@ -23,7 +23,8 @@ ParsedGeometry::~ParsedGeometry()
 {
 }
 
-ParsedElement::ParsedElement()
+ParsedElement::ParsedElement():
+	type(0)
 {
 }
 
@@ -40,18 +41,15 @@ SharedGeometries::SharedGeometries()
 
 SharedGeometries::~SharedGeometries()
 {
-	for (auto it : shared)
-		for (auto geom : it.second)
-			delete geom;
 	clear();
 }
 
-void SharedGeometries::addSharedGeom(const ElementId& id, const ParsedGeometryPtrList& geoms)
+void SharedGeometries::addSharedGeom(const SharedGeomId& id, const ParsedGeometryPtrList& geoms)
 {
 	shared[id] = geoms;
 }
 
-bool SharedGeometries::getSharedGeom(const ElementId& id, ParsedGeometryPtrList& geoms)
+bool SharedGeometries::getSharedGeom(const SharedGeomId& id, ParsedGeometryPtrList& geoms)
 {
 	auto it = shared.find(id);
 	if (it == shared.end())
@@ -63,5 +61,8 @@ bool SharedGeometries::getSharedGeom(const ElementId& id, ParsedGeometryPtrList&
 
 void SharedGeometries::clear()
 {
+	for (auto it : shared)
+		for (auto geom : it.second)
+			delete geom;
 	shared.clear();
 }

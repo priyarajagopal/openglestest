@@ -17,10 +17,11 @@ public:
 	void set_viewport(int x, int y, int w, int h);
 	void draw();
 
-	bool load_model_data(const char* data);
+	bool load_model(const char* url);
 
 	const Camera& get_camera();
 	void reset_camera();
+	void fit_camera_to_box(float xmin, float ymin, float zmin, float xmax, float ymax, float zmax);
 
 	void set_elements_selected(const ElementIdList& ids, bool selected);
 	void deselect_all_elements();

@@ -15,7 +15,7 @@ public:
 	void render(Camera& camera, ElementManager& element_manager);
 private:
 	//SimpleShaderProgram shader_;
-	RegularShaderProgram shader_;
+	RegularShaderProgram shader;
 };
 
 }
