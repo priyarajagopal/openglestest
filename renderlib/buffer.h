@@ -4,7 +4,7 @@
 #include <memory>
 #include "gles.h"
 #include "parsed_objects.h"
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include "box.h"
 
 namespace renderlib {

@@ -1,7 +1,8 @@
 #pragma once
 
-#ifdef OPENGL_OPENGLES2
+#ifdef __APPLE__
 #include <OpenGLES/ES2/gl.h>
+#include <OpenGLES/ES2/glext.h>
 #endif
 
 #ifdef __ANDROID_API__

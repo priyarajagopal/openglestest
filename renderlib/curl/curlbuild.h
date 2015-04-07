@@ -132,7 +132,11 @@
 #endif
 
 /* The size of `long', as computed by sizeof. */
+#ifdef __LP64__
+#define CURL_SIZEOF_LONG 8
+#else
 #define CURL_SIZEOF_LONG 4
+#endif
 
 /* Integral data type used for curl_socklen_t. */
 #define CURL_TYPEOF_CURL_SOCKLEN_T socklen_t
@@ -141,9 +145,7 @@
 #ifdef _WIN32
 #  include <winsock2.h>
 #  include <ws2tcpip.h>
-#endif
-
-#ifdef HAVE_SYS_SOCKET_H
+#else
 #  include <sys/socket.h>
 #endif
 

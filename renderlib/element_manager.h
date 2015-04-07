@@ -6,7 +6,7 @@
 #include "element.h"
 #include "parsed_objects.h"
 #include "box.h"
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
 namespace renderlib {
 

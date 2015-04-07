@@ -75,7 +75,7 @@ ParsedGeometryPtr parseJsonGeometry(rapidjson::Value& jGeom)
 		if (type == 0)	// ignore lines for now
 		{
 			parsedGeom = new ParsedGeometry(
-				jGeom.HasMember("color") ? RGBA(jGeom["color"].GetUint()) : RGBA(255, 255, 255, 255),
+				jGeom.HasMember("color") ? RGBA(jGeom["color"].GetInt()) : RGBA(255, 255, 255, 255),
 				jGeom["type"].GetInt(),
 				jGeom["data"].GetString()
 			);

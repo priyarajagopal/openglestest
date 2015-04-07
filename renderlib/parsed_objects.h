@@ -7,7 +7,7 @@
 #include "color.h"
 #include "ctm_decoder.h"
 #include "element_id.h"
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
 namespace renderlib {
 

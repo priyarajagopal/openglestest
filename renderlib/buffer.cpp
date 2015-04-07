@@ -1,5 +1,5 @@
 #include "buffer.h"
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
 using namespace renderlib;
 
