@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02D5EE3E1AD5CC7E00F126B7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D5EE3D1AD5CC7E00F126B7 /* libcurl.a */; };
+		02D5EE401AD5CC8F00F126B7 /* librenderLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D5EE3F1AD5CC8F00F126B7 /* librenderLib.a */; };
+		02D5EE431AD5CD7F00F126B7 /* INVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02D5EE421AD5CD7F00F126B7 /* INVViewController.m */; };
 		B6E69EFE1AD392C3004281C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E69EFD1AD392C3004281C6 /* main.m */; };
 		B6E69F011AD392C3004281C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E69F001AD392C3004281C6 /* AppDelegate.m */; };
 		B6E69F0B1AD392C3004281C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6E69F091AD392C3004281C6 /* Main.storyboard */; };
@@ -18,7 +21,6 @@
 		B6E6A1991AD3BA1C004281C6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E6A1961AD3BA1C004281C6 /* CoreData.framework */; };
 		B6E6A19A1AD3BA1C004281C6 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E6A1971AD3BA1C004281C6 /* GLKit.framework */; };
 		B6E6A19B1AD3BA1C004281C6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E6A1981AD3BA1C004281C6 /* Security.framework */; };
-		B6E6A19D1AD3BE66004281C6 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E6A19C1AD3BE66004281C6 /* libcurl.a */; };
 		B6E6A19F1AD3BF4F004281C6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E6A19E1AD3BF4F004281C6 /* libz.dylib */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02D5EE3D1AD5CC7E00F126B7 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		02D5EE3F1AD5CC8F00F126B7 /* librenderLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = librenderLib.a; sourceTree = "<group>"; };
+		02D5EE411AD5CD7F00F126B7 /* INVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INVViewController.h; sourceTree = "<group>"; };
+		02D5EE421AD5CD7F00F126B7 /* INVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INVViewController.m; sourceTree = "<group>"; };
 		B6E69EF81AD392C3004281C6 /* testRenderLib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testRenderLib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E69EFC1AD392C3004281C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6E69EFD1AD392C3004281C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -57,7 +63,6 @@
 		B6E6A1961AD3BA1C004281C6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B6E6A1971AD3BA1C004281C6 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B6E6A1981AD3BA1C004281C6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		B6E6A19C1AD3BE66004281C6 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		B6E6A19E1AD3BF4F004281C6 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -67,11 +72,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6E6A19F1AD3BF4F004281C6 /* libz.dylib in Frameworks */,
-				B6E6A19D1AD3BE66004281C6 /* libcurl.a in Frameworks */,
 				B6E6A1991AD3BA1C004281C6 /* CoreData.framework in Frameworks */,
 				B6E6A19A1AD3BA1C004281C6 /* GLKit.framework in Frameworks */,
 				B6E6A19B1AD3BA1C004281C6 /* Security.framework in Frameworks */,
 				B6E6A1931AD3B85F004281C6 /* librenderLib.a in Frameworks */,
+				02D5EE3E1AD5CC7E00F126B7 /* libcurl.a in Frameworks */,
+				02D5EE401AD5CC8F00F126B7 /* librenderLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +91,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02D5EE351AD5CBA600F126B7 /* storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				B6E69F091AD392C3004281C6 /* Main.storyboard */,
+			);
+			name = storyboards;
+			sourceTree = "<group>";
+		};
+		02D5EE3C1AD5CC7E00F126B7 /* libraries */ = {
+			isa = PBXGroup;
+			children = (
+				02D5EE3F1AD5CC8F00F126B7 /* librenderLib.a */,
+				02D5EE3D1AD5CC7E00F126B7 /* libcurl.a */,
+			);
+			path = libraries;
+			sourceTree = "<group>";
+		};
 		B6E69EEF1AD392C3004281C6 = {
 			isa = PBXGroup;
 			children = (
@@ -111,12 +134,14 @@
 		B6E69EFA1AD392C3004281C6 /* testRenderLib */ = {
 			isa = PBXGroup;
 			children = (
-				B6E6A19C1AD3BE66004281C6 /* libcurl.a */,
+				02D5EE3C1AD5CC7E00F126B7 /* libraries */,
 				B6E69EFF1AD392C3004281C6 /* AppDelegate.h */,
 				B6E69F001AD392C3004281C6 /* AppDelegate.m */,
+				02D5EE411AD5CD7F00F126B7 /* INVViewController.h */,
+				02D5EE421AD5CD7F00F126B7 /* INVViewController.m */,
 				B6E6A1941AD3B96B004281C6 /* GameViewController.mm */,
 				B6E69F061AD392C3004281C6 /* GameViewController.h */,
-				B6E69F091AD392C3004281C6 /* Main.storyboard */,
+				02D5EE351AD5CBA600F126B7 /* storyboards */,
 				B6E69F0C1AD392C3004281C6 /* Images.xcassets */,
 				B6E69F0E1AD392C3004281C6 /* LaunchScreen.xib */,
 				B6E69EFB1AD392C3004281C6 /* Supporting Files */,
@@ -276,6 +301,7 @@
 			files = (
 				B6E6A1951AD3B96B004281C6 /* GameViewController.mm in Sources */,
 				B6E69F011AD392C3004281C6 /* AppDelegate.m in Sources */,
+				02D5EE431AD5CD7F00F126B7 /* INVViewController.m in Sources */,
 				B6E69EFE1AD392C3004281C6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,7 +433,10 @@
 				);
 				INFOPLIST_FILE = testRenderLib/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/testRenderLib";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/testRenderLib/**",
+					"$(PROJECT_DIR)/testRenderLib/libraries",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -423,7 +452,10 @@
 				);
 				INFOPLIST_FILE = testRenderLib/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/testRenderLib";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/testRenderLib/**",
+					"$(PROJECT_DIR)/testRenderLib/libraries",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

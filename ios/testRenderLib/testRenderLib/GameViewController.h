@@ -11,4 +11,5 @@
 
 @interface GameViewController : GLKViewController
 
+@property (nonatomic,copy)NSString* urlToLoad;
 @end

@@ -1,5 +1,5 @@
 //
-//  GameViewController.m
+//  GameViewController.mm
 //  testRenderLib
 //
 //  Created by Christian Utama on 7/4/15.
@@ -8,8 +8,7 @@
 
 #import "GameViewController.h"
 #import <OpenGLES/ES2/glext.h>
-
-#include "viewer.h"
+#import "viewer.h"
 
 using namespace renderlib;
 
@@ -18,9 +17,6 @@ using namespace renderlib;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
-
-- (void)setupGL;
-- (void)tearDownGL;
 
 @end
 
@@ -45,8 +41,20 @@ using namespace renderlib;
     [self setupGL];
 }
 
-- (void)dealloc
-{    
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupGL];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self loadModel];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
     [self tearDownGL];
     
     if ([EAGLContext currentContext] == self.context) {
@@ -72,19 +80,22 @@ using namespace renderlib;
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
-
+#pragma mark - Helpers
 - (void)setupGL
 {
     [EAGLContext setCurrentContext:self.context];
     
     _viewer = new Viewer();
     _viewer->init();
-    _viewer->load_model("http://christian-test.s3.amazonaws.com/SampleHouseTest/geomInfo.json");
-    
+     
 }
+     
+- (void)loadModel
+{
+    _viewer->load_model([self.urlToLoad cStringUsingEncoding:NSASCIIStringEncoding]);
+        
+}
+
 
 - (void)tearDownGL
 {
