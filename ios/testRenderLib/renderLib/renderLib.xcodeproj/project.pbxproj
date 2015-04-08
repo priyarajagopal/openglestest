@@ -233,7 +233,6 @@
 		B6E6A1881AD396C9004281C6 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E6A09C1AD396C9004281C6 /* writer.h */; };
 		B6E6A1891AD396C9004281C6 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E6A09D1AD396C9004281C6 /* renderer.cpp */; };
 		B6E6A18A1AD396C9004281C6 /* renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E6A09E1AD396C9004281C6 /* renderer.h */; };
-		B6E6A18B1AD396C9004281C6 /* SampleHouse.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E6A09F1AD396C9004281C6 /* SampleHouse.h */; };
 		B6E6A18C1AD396C9004281C6 /* shader_programs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E6A0A01AD396C9004281C6 /* shader_programs.cpp */; };
 		B6E6A18D1AD396C9004281C6 /* shader_programs.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E6A0A11AD396C9004281C6 /* shader_programs.h */; };
 		B6E6A18E1AD396C9004281C6 /* shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E6A0A21AD396C9004281C6 /* shaders.cpp */; };
@@ -262,7 +261,6 @@
 		B6E69F4D1AD396C9004281C6 /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
 		B6E69F511AD396C9004281C6 /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
 		B6E69F521AD396C9004281C6 /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
-		B6E69F531AD396C9004281C6 /* stamp-h2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "stamp-h2"; sourceTree = "<group>"; };
 		B6E69F541AD396C9004281C6 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
 		B6E69F551AD396C9004281C6 /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
 		B6E69F561AD396C9004281C6 /* element_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = element_id.h; path = ../../../renderlib/element_id.h; sourceTree = "<group>"; };
@@ -582,7 +580,6 @@
 		B6E6A09C1AD396C9004281C6 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		B6E6A09D1AD396C9004281C6 /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = renderer.cpp; path = ../../../renderlib/renderer.cpp; sourceTree = "<group>"; };
 		B6E6A09E1AD396C9004281C6 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = renderer.h; path = ../../../renderlib/renderer.h; sourceTree = "<group>"; };
-		B6E6A09F1AD396C9004281C6 /* SampleHouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SampleHouse.h; path = ../../../renderlib/SampleHouse.h; sourceTree = "<group>"; };
 		B6E6A0A01AD396C9004281C6 /* shader_programs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shader_programs.cpp; path = ../../../renderlib/shader_programs.cpp; sourceTree = "<group>"; };
 		B6E6A0A11AD396C9004281C6 /* shader_programs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shader_programs.h; path = ../../../renderlib/shader_programs.h; sourceTree = "<group>"; };
 		B6E6A0A21AD396C9004281C6 /* shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shaders.cpp; path = ../../../renderlib/shaders.cpp; sourceTree = "<group>"; };
@@ -636,7 +633,6 @@
 				B6E6A07D1AD396C9004281C6 /* rapidjson */,
 				B6E6A09D1AD396C9004281C6 /* renderer.cpp */,
 				B6E6A09E1AD396C9004281C6 /* renderer.h */,
-				B6E6A09F1AD396C9004281C6 /* SampleHouse.h */,
 				B6E6A0A01AD396C9004281C6 /* shader_programs.cpp */,
 				B6E6A0A11AD396C9004281C6 /* shader_programs.h */,
 				B6E6A0A21AD396C9004281C6 /* shaders.cpp */,
@@ -664,7 +660,6 @@
 				B6E69F4D1AD396C9004281C6 /* easy.h */,
 				B6E69F511AD396C9004281C6 /* mprintf.h */,
 				B6E69F521AD396C9004281C6 /* multi.h */,
-				B6E69F531AD396C9004281C6 /* stamp-h2 */,
 				B6E69F541AD396C9004281C6 /* stdcheaders.h */,
 				B6E69F551AD396C9004281C6 /* typecheck-gcc.h */,
 			);
@@ -1061,7 +1056,6 @@
 				B6E6A1241AD396C9004281C6 /* mixed_product.hpp in Headers */,
 				B6E6A1211AD396C9004281C6 /* matrix_operation.hpp in Headers */,
 				B6E6A1141AD396C9004281C6 /* fast_exponential.hpp in Headers */,
-				B6E6A18B1AD396C9004281C6 /* SampleHouse.h in Headers */,
 				B6E6A1161AD396C9004281C6 /* fast_trigonometry.hpp in Headers */,
 				B6E6A12F1AD396C9004281C6 /* quaternion.hpp in Headers */,
 				B6E6A1391AD396C9004281C6 /* spline.hpp in Headers */,
@@ -1480,6 +1474,7 @@
 				B6E69F341AD39685004281C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

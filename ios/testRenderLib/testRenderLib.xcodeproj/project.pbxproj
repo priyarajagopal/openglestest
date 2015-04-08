@@ -481,6 +481,7 @@
 				B6E69F211AD392C3004281C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B6E69F221AD392C3004281C6 /* Build configuration list for PBXNativeTarget "testRenderLibTests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +490,7 @@
 				B6E69F241AD392C3004281C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
