@@ -42,9 +42,6 @@
     <ClInclude Include="..\..\renderlib\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\renderlib\SampleHouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\renderlib\shader_programs.h">
       <Filter>Header Files</Filter>
     </ClInclude>

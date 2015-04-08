@@ -143,7 +143,6 @@
     <ClInclude Include="..\..\renderlib\logging.h" />
     <ClInclude Include="..\..\renderlib\model_loader.h" />
     <ClInclude Include="..\..\renderlib\renderer.h" />
-    <ClInclude Include="..\..\renderlib\SampleHouse.h" />
     <ClInclude Include="..\..\renderlib\shaders.h" />
     <ClInclude Include="..\..\renderlib\shader_programs.h" />
     <ClInclude Include="..\..\renderlib\parsed_objects.h" />
