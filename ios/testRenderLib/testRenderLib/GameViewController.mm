@@ -80,8 +80,7 @@ using namespace renderlib;
     
     _viewer = new Viewer();
     _viewer->init();
-    _viewer->fit_camera_to_box(-14.401161193847656,-9.856366157531738,-1.0,15.459482192993164,19.143634796142578,28.825000762939453);
-    _viewer->load_model("http://christian-test.s3.amazonaws.com/SampleHouseTest/14.0.json");
+    _viewer->load_model("http://christian-test.s3.amazonaws.com/SampleHouseTest/geomInfo.json");
     
 }
 

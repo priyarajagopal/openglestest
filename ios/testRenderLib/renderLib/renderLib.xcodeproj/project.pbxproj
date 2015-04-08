@@ -239,6 +239,8 @@
 		B6E6A18F1AD396C9004281C6 /* shaders.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E6A0A31AD396C9004281C6 /* shaders.h */; };
 		B6E6A1901AD396C9004281C6 /* viewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E6A0A41AD396C9004281C6 /* viewer.cpp */; };
 		B6E6A1911AD396C9004281C6 /* viewer.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E6A0A51AD396C9004281C6 /* viewer.h */; };
+		B6E6A1A41AD4EC6C004281C6 /* geom_info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E6A1A21AD4EC6C004281C6 /* geom_info.cpp */; };
+		B6E6A1A51AD4EC6C004281C6 /* geom_info.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E6A1A31AD4EC6C004281C6 /* geom_info.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -586,6 +588,8 @@
 		B6E6A0A31AD396C9004281C6 /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shaders.h; path = ../../../renderlib/shaders.h; sourceTree = "<group>"; };
 		B6E6A0A41AD396C9004281C6 /* viewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = viewer.cpp; path = ../../../renderlib/viewer.cpp; sourceTree = "<group>"; };
 		B6E6A0A51AD396C9004281C6 /* viewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = viewer.h; path = ../../../renderlib/viewer.h; sourceTree = "<group>"; };
+		B6E6A1A21AD4EC6C004281C6 /* geom_info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = geom_info.cpp; path = ../../../renderlib/geom_info.cpp; sourceTree = "<group>"; };
+		B6E6A1A31AD4EC6C004281C6 /* geom_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = geom_info.h; path = ../../../renderlib/geom_info.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -602,43 +606,45 @@
 		B6E69F251AD39685004281C6 = {
 			isa = PBXGroup;
 			children = (
-				B6E69F2F1AD39685004281C6 /* Products */,
 				B6E69F3B1AD396C9004281C6 /* base64.cpp */,
-				B6E69F3C1AD396C9004281C6 /* base64.h */,
 				B6E69F3D1AD396C9004281C6 /* box.cpp */,
-				B6E69F3E1AD396C9004281C6 /* box.h */,
 				B6E69F3F1AD396C9004281C6 /* buffer.cpp */,
-				B6E69F401AD396C9004281C6 /* buffer.h */,
 				B6E69F411AD396C9004281C6 /* camera.cpp */,
+				B6E69F441AD396C9004281C6 /* ctm_decoder.cpp */,
+				B6E69F571AD396C9004281C6 /* element_manager.cpp */,
+				B6E69F591AD396C9004281C6 /* element.cpp */,
+				B6E6A1A21AD4EC6C004281C6 /* geom_info.cpp */,
+				B6E69F5B1AD396C9004281C6 /* geometry.cpp */,
+				B6E6A0611AD396C9004281C6 /* model_loader.cpp */,
+				B6E6A07B1AD396C9004281C6 /* parsed_objects.cpp */,
+				B6E6A09D1AD396C9004281C6 /* renderer.cpp */,
+				B6E6A0A01AD396C9004281C6 /* shader_programs.cpp */,
+				B6E6A0A21AD396C9004281C6 /* shaders.cpp */,
+				B6E6A0A41AD396C9004281C6 /* viewer.cpp */,
+				B6E69F3C1AD396C9004281C6 /* base64.h */,
+				B6E69F3E1AD396C9004281C6 /* box.h */,
+				B6E69F401AD396C9004281C6 /* buffer.h */,
 				B6E69F421AD396C9004281C6 /* camera.h */,
 				B6E69F431AD396C9004281C6 /* color.h */,
-				B6E69F441AD396C9004281C6 /* ctm_decoder.cpp */,
 				B6E69F451AD396C9004281C6 /* ctm_decoder.h */,
-				B6E69F461AD396C9004281C6 /* curl */,
 				B6E69F561AD396C9004281C6 /* element_id.h */,
-				B6E69F571AD396C9004281C6 /* element_manager.cpp */,
 				B6E69F581AD396C9004281C6 /* element_manager.h */,
-				B6E69F591AD396C9004281C6 /* element.cpp */,
 				B6E69F5A1AD396C9004281C6 /* element.h */,
-				B6E69F5B1AD396C9004281C6 /* geometry.cpp */,
+				B6E6A1A31AD4EC6C004281C6 /* geom_info.h */,
 				B6E69F5C1AD396C9004281C6 /* geometry.h */,
 				B6E69F5D1AD396C9004281C6 /* gles.h */,
-				B6E69F5E1AD396C9004281C6 /* glm */,
 				B6E6A0601AD396C9004281C6 /* logging.h */,
-				B6E6A0611AD396C9004281C6 /* model_loader.cpp */,
 				B6E6A0621AD396C9004281C6 /* model_loader.h */,
-				B6E6A0631AD396C9004281C6 /* openctm */,
-				B6E6A07B1AD396C9004281C6 /* parsed_objects.cpp */,
 				B6E6A07C1AD396C9004281C6 /* parsed_objects.h */,
-				B6E6A07D1AD396C9004281C6 /* rapidjson */,
-				B6E6A09D1AD396C9004281C6 /* renderer.cpp */,
 				B6E6A09E1AD396C9004281C6 /* renderer.h */,
-				B6E6A0A01AD396C9004281C6 /* shader_programs.cpp */,
 				B6E6A0A11AD396C9004281C6 /* shader_programs.h */,
-				B6E6A0A21AD396C9004281C6 /* shaders.cpp */,
 				B6E6A0A31AD396C9004281C6 /* shaders.h */,
-				B6E6A0A41AD396C9004281C6 /* viewer.cpp */,
 				B6E6A0A51AD396C9004281C6 /* viewer.h */,
+				B6E69F2F1AD39685004281C6 /* Products */,
+				B6E69F461AD396C9004281C6 /* curl */,
+				B6E69F5E1AD396C9004281C6 /* glm */,
+				B6E6A0631AD396C9004281C6 /* openctm */,
+				B6E6A07D1AD396C9004281C6 /* rapidjson */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1173,6 +1179,7 @@
 				B6E6A1801AD396C9004281C6 /* memorybuffer.h in Headers */,
 				B6E6A13A1AD396C9004281C6 /* std_based_type.hpp in Headers */,
 				B6E6A0CD1AD396C9004281C6 /* func_geometric.hpp in Headers */,
+				B6E6A1A51AD4EC6C004281C6 /* geom_info.h in Headers */,
 				B6E6A13F1AD396C9004281C6 /* vector_angle.hpp in Headers */,
 				B6E6A0C41AD396C9004281C6 /* _features.hpp in Headers */,
 				B6E6A0B11AD396C9004281C6 /* curl.h in Headers */,
@@ -1339,6 +1346,7 @@
 				B6E6A16A1AD396C9004281C6 /* stream.c in Sources */,
 				B6E6A0CA1AD396C9004281C6 /* dummy.cpp in Sources */,
 				B6E6A0A81AD396C9004281C6 /* box.cpp in Sources */,
+				B6E6A1A41AD4EC6C004281C6 /* geom_info.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
