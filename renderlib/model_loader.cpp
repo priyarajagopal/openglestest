@@ -28,7 +28,7 @@ bool ModelLoader::wait_until_done()
 	return true;
 }
 
-size_t write_data(void *buffer, size_t size, size_t nmemb, void *user_data)
+static size_t write_data(void *buffer, size_t size, size_t nmemb, void *user_data)
 {
 	std::stringstream* os = (std::stringstream*) user_data;
 

@@ -5,14 +5,16 @@
 #include <chrono>
 #include "logging.h"
 #include "model_loader.h"
+#include "viewer.h"
+#include "geom_info.h"
 
 using namespace renderlib;
 
 #define LOAD_DURING_RENDER_MAX_DURATION 20
 
-ElementManager::ElementManager():
+ElementManager::ElementManager(Viewer* viewer_):
 	current_opaque_buffer(nullptr), current_transparent_buffer(nullptr),
-	loading(false)
+	loading(false), viewer(viewer_)
 {
 }
 
@@ -47,9 +49,20 @@ void ElementManager::load_model(const char* url)
 void ElementManager::thread_load_model(const std::string url)
 {
 	set_loading(true);
-	ModelLoader loader(this);
-	loader.load_url(url.c_str());
-	loader.wait_until_done();
+	GeomInfo ginfo = GeomInfo::get_from_url(url);
+	viewer->fit_camera_to_box(ginfo.bbox.minpos.x, ginfo.bbox.minpos.y, ginfo.bbox.minpos.z,
+		ginfo.bbox.maxpos.x, ginfo.bbox.maxpos.y, ginfo.bbox.maxpos.z);
+
+	while (!ginfo.urls.empty())
+	{
+		std::string file_url = ginfo.urls.front();
+		ginfo.urls.pop_front();
+
+		ModelLoader loader(this);
+		loader.load_url(file_url.c_str());
+		loader.wait_until_done();
+	}
+	
 	set_loading(false);
 }
 

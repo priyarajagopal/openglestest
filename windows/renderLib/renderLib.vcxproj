@@ -139,6 +139,7 @@
     <ClInclude Include="..\..\renderlib\element_id.h" />
     <ClInclude Include="..\..\renderlib\element_manager.h" />
     <ClInclude Include="..\..\renderlib\geometry.h" />
+    <ClInclude Include="..\..\renderlib\geom_info.h" />
     <ClInclude Include="..\..\renderlib\gles.h" />
     <ClInclude Include="..\..\renderlib\logging.h" />
     <ClInclude Include="..\..\renderlib\model_loader.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="..\..\renderlib\element.cpp" />
     <ClCompile Include="..\..\renderlib\element_manager.cpp" />
     <ClCompile Include="..\..\renderlib\geometry.cpp" />
+    <ClCompile Include="..\..\renderlib\geom_info.cpp" />
     <ClCompile Include="..\..\renderlib\model_loader.cpp" />
     <ClCompile Include="..\..\renderlib\renderer.cpp" />
     <ClCompile Include="..\..\renderlib\shaders.cpp" />

@@ -10,7 +10,7 @@ using namespace renderlib;
 Viewer::Viewer()
 {
 	renderer = new Renderer();
-	element_manager = new ElementManager();
+	element_manager = new ElementManager(this);
 }
 
 
@@ -28,7 +28,7 @@ void Viewer::init()
 
 void Viewer::set_viewport(int x, int y, int w, int h)
 {
-	LOG("set_viewport %d %d %d %d", x, y, w, h);
+	//LOG("set_viewport %d %d %d %d", x, y, w, h);
 	viewport_x = x;
 	viewport_y = y;
 	viewport_w = w;

@@ -10,10 +10,12 @@
 
 namespace renderlib {
 
+class Viewer;
+
 class ElementManager
 {
 public:
-	ElementManager();
+	ElementManager(Viewer*);
 	~ElementManager();
 
 	void load_model(const char* url);
@@ -33,6 +35,7 @@ private:
 	BufferPtr current_opaque_buffer;
 	BufferPtr current_transparent_buffer;
 	bool loading;
+	Viewer* viewer;
 	
 	ParsedElementPtr get_next_parsed_element();
 	BufferOffset add_geom_to_buffer(const ParsedGeometryPtr& geom, const glm::mat4& mat);
