@@ -24,7 +24,7 @@ ParsedGeometry::~ParsedGeometry()
 }
 
 ParsedElement::ParsedElement():
-	type(0)
+	type(UNKNOWN)
 {
 }
 

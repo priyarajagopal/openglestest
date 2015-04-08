@@ -12,6 +12,8 @@ class Geometry
 public:
 	Geometry(const RGBA& color_, uint8_t type_);
 	~Geometry();
+	void change_color(const RGBA& color);
+	void reset_color();
 
 	RGBA color;
 	uint8_t type;	// 0: triangles, 1: lines

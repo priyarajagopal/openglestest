@@ -7,10 +7,10 @@ using namespace renderlib;
 #define MAX_INDEX_COUNT 600000
 
 Buffer::Buffer():
-	vertex_buffer_id(0), index_buffer_id(0),
+	vertex_buffer_id(0), color_buffer_id(0), index_buffer_id(0),
 	buf_vertex_count(0), buf_index_count(0),
 	transparent(false), type(GL_TRIANGLES),
-	bounded(false), loaded(false)
+	loaded(false)
 {
 }
 
@@ -18,24 +18,14 @@ Buffer::~Buffer()
 {
 	clear_buffers();
 	unbind();
-	GLuint buffers[] = {vertex_buffer_id, index_buffer_id};
-	glDeleteBuffers(2, buffers);
-}
-
-void Buffer::bind()
-{
-	if (bounded) return;
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id);
-	bounded = true;
+	GLuint buffers[] = {vertex_buffer_id, color_buffer_id, index_buffer_id};
+	glDeleteBuffers(3, buffers);
 }
 
 void Buffer::unbind()
 {
-	if (!bounded) return;
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	bounded = false;
 }
 
 void Buffer::update_buffer_count()
@@ -83,12 +73,14 @@ bool Buffer::add_ctm_data(CTMDecoder& ctm, const glm::mat4& matrix, const RGBA& 
 		vertex.normal[1] = 0;
 		vertex.normal[2] = 0;
 
-		vertex.color[0] = color.r();
-		vertex.color[1] = color.g();
-		vertex.color[2] = color.b();
-		vertex.color[3] = color.a();
+		ColorStruct clr;
+		clr.color[0] = color.r();
+		clr.color[1] = color.g();
+		clr.color[2] = color.b();
+		clr.color[3] = color.a();
 
 		vertex_buffer.push_back(vertex);
+		color_buffer.push_back(clr);
 	}
 
 	for (unsigned int i=0; i < indexCnt; i += 3)
@@ -138,14 +130,22 @@ void Buffer::load_buffers()
 	if (loaded) return;
 	glGenBuffers(1, &vertex_buffer_id);
 	assert(vertex_buffer_id != 0);
+	glGenBuffers(1, &color_buffer_id);
+	assert(color_buffer_id != 0);
 	glGenBuffers(1, &index_buffer_id);
 	assert(index_buffer_id != 0);
 
 	update_buffer_count();
 	
-	bind();
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id);
     glBufferData(GL_ARRAY_BUFFER, buf_vertex_count * sizeof(VertexStruct), &vertex_buffer[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, color_buffer_id);
+    glBufferData(GL_ARRAY_BUFFER, buf_vertex_count * sizeof(ColorStruct), &color_buffer[0], GL_DYNAMIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, buf_index_count * sizeof(IndexType), &index_buffer[0], GL_STATIC_DRAW);
+
 	unbind();
 
 	// clear memory after loading to GPU
@@ -156,12 +156,13 @@ void Buffer::load_buffers()
 void Buffer::clear_buffers()
 {
 	vertex_buffer.clear();
+	color_buffer.clear();
 	index_buffer.clear();
 }
 
 void Buffer::draw(GLint position_id, GLint normal_id, GLint color_id)
 {
-	bind();
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id);
 
     glVertexAttribPointer(position_id, 3, GL_FLOAT, GL_FALSE,
         sizeof(VertexStruct), (void*) offsetof(VertexStruct, position));
@@ -169,12 +170,33 @@ void Buffer::draw(GLint position_id, GLint normal_id, GLint color_id)
     glVertexAttribPointer(normal_id, 3, GL_FLOAT, GL_FALSE,
         sizeof(VertexStruct), (void*) offsetof(VertexStruct, normal));
 
-    glVertexAttribPointer(color_id, 4, GL_UNSIGNED_BYTE, GL_TRUE,
-        sizeof(VertexStruct), (void*) offsetof(VertexStruct, color));
+	glBindBuffer(GL_ARRAY_BUFFER, color_buffer_id);
 
+    glVertexAttribPointer(color_id, 4, GL_UNSIGNED_BYTE, GL_TRUE,
+        sizeof(ColorStruct), (void*) offsetof(ColorStruct, color));
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id);
 	glDrawElements(type, buf_index_count, GL_UNSIGNED_INT, NULL);
 
 	unbind();
+}
+
+void Buffer::change_color(uint32_t vertex_offset, uint32_t vertex_count, const RGBA& color)
+{
+	ColorStruct clr;
+	clr.color[0] = color.r();
+	clr.color[1] = color.g();
+	clr.color[2] = color.b();
+	clr.color[3] = color.a();
+	
+	std::vector<ColorStruct> colors;
+	for (uint32_t i=0; i < vertex_count; i++)
+		colors.push_back(clr);
+
+	glBindBuffer(GL_ARRAY_BUFFER, color_buffer_id);
+	glBufferSubData(GL_ARRAY_BUFFER, vertex_offset * sizeof(ColorStruct), 
+		vertex_count * sizeof(ColorStruct), &colors[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 

@@ -168,3 +168,9 @@ void ElementManager::process_parsed_elements()
 		shared_geoms.clear();
 	}
 }
+
+ElementPtr ElementManager::get_element_by_id(const ElementId& id) const
+{
+	auto it = elements.find(id);
+	return it == elements.end() ? nullptr : it->second;
+}

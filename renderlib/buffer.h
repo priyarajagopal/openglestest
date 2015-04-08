@@ -6,6 +6,7 @@
 #include "parsed_objects.h"
 #include "glm/glm.hpp"
 #include "box.h"
+#include "color.h"
 
 namespace renderlib {
 
@@ -13,6 +14,10 @@ struct VertexStruct
 {
 	float position[3];
 	float normal[3];
+};
+
+struct ColorStruct
+{
 	uint8_t color[4];
 };
 
@@ -33,24 +38,25 @@ public:
 	bool is_loaded() const { return loaded; }
 	void clear_buffers();
 	bool is_transparent() const { return transparent; }
+	void change_color(uint32_t vertex_offset, uint32_t vertex_count, const RGBA& color);
 
 private:
-	void bind();
 	void unbind();
 	void update_buffer_count();
 
 	std::vector<VertexStruct> vertex_buffer;
+	std::vector<ColorStruct> color_buffer;
 	std::vector<IndexType> index_buffer;
 
-	size_t buf_vertex_count;
-	size_t buf_index_count;
+	uint32_t buf_vertex_count;
+	uint32_t buf_index_count;
 
 	GLuint vertex_buffer_id;
+	GLuint color_buffer_id;
 	GLuint index_buffer_id;
 
 	bool transparent;
 	GLenum type;	// GL_TRIANGLES, GL_LINES
-	bool bounded;
 	bool loaded;
 };
 
@@ -61,9 +67,9 @@ struct BufferOffset
 {
 	BufferPtr buffer;
 	uint32_t vertex_offset;
-	size_t vertex_count;
+	uint32_t vertex_count;
 	uint32_t index_offset;
-	size_t index_count;
+	uint32_t index_count;
 };
 
 }

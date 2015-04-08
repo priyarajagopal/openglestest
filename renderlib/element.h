@@ -12,13 +12,14 @@ namespace renderlib {
 class Element
 {
 public:
-	Element(const ElementId& _element_id, uint8_t _type);
+	Element(const ElementId& _element_id, ElementType _type);
 	~Element();
+	void set_visible(bool visible);
 
 	ElementId element_id;
 	bool selected;
 	bool visible;
-	uint8_t type;	// 1: space, 0: others
+	ElementType type;
 
 	GeometryPtrList geometries;
 };

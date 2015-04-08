@@ -39,7 +39,7 @@ public:
 	ParsedElement();
 	~ParsedElement();
 	ElementId element_id;
-	uint8_t type;	// 1: space, 0: others
+	ElementType type;
 	ParsedGeometryPtrList geometries;
 };
 typedef ParsedElement* ParsedElementPtr;

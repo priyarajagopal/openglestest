@@ -23,7 +23,9 @@ void checkGLError(const char* op) {
 void Renderer::init()
 {
     glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 	//glEnable(GL_MULTISAMPLE);
+	glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -64,14 +66,12 @@ void Renderer::render(Camera& camera, ElementManager& element_manager)
 	}
 
 	// render transparent
-	glEnable(GL_BLEND);
 	glDepthMask(GL_FALSE);
 	for (BufferPtr& buffer : element_manager.buffers)
 	{
 		if (buffer->is_transparent())
 			buffer->draw(shader.aPosition, shader.aNormal, shader.aColor);
 	}
-    glDisable(GL_BLEND);
 	glDepthMask(GL_TRUE);
 
 	checkGLError("render");

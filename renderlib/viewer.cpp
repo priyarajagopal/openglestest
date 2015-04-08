@@ -53,3 +53,19 @@ void Viewer::fit_camera_to_box(float xmin, float ymin, float zmin, float xmax, f
 {
 	camera.zoom_box(Box(xmin, ymin, zmin, xmax, ymax, zmax));
 }
+
+void Viewer::set_elements_visible(const ElementIdList& ids, bool visible)
+{
+	for (auto& id : ids)
+	{
+		ElementPtr element = element_manager->get_element_by_id(id);
+		if (element)
+			element->set_visible(visible);
+	}
+}
+
+bool Viewer::is_element_visible(const ElementId& id)
+{
+	ElementPtr element = element_manager->get_element_by_id(id);
+	return element ? element->visible : false;
+}

@@ -76,7 +76,7 @@ ParsedGeometryPtr parseJsonGeometry(rapidjson::Value& jGeom)
 		{
 			parsedGeom = new ParsedGeometry(
 				jGeom.HasMember("color") ? RGBA(jGeom["color"].GetInt()) : RGBA(255, 255, 255, 255),
-				jGeom["type"].GetInt(),
+				type,
 				jGeom["data"].GetString()
 			);
 		}
@@ -124,15 +124,20 @@ bool ModelLoader::load_model_data(const char* data)
 		auto& jElements = doc["geometries"];
 		for (rapidjson::SizeType i = 0; i < jElements.Size(); i++)
 		{
-			ParsedElementPtr elem = new ParsedElement();
 			auto& jElement = jElements[i];
 			ElementId elementId = jElement["elementId"].GetUint();
-
-			elem->element_id = elementId;
+			ElementType eltype;
 			if (jElement.HasMember("type"))
-				elem->type = jElement["type"].GetInt();
+			{
+				eltype = (ElementType) jElement["type"].GetInt();
+				if (eltype == SPACES)
+					continue;	// ignore spaces for now
+			}
+			
+			ParsedElementPtr elem = new ParsedElement();
+			elem->element_id = elementId;
+			elem->type = eltype;
 			elem->geometries = parseJsonGeometryArray(jElement["geometry"]);
-
 			element_manager->queue_parse_element(elem);
 		}
 	}

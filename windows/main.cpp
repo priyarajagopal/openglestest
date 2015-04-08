@@ -10,6 +10,8 @@ GLFWwindow* window = 0;
 const int window_w = 640;
 const int window_h = 480;
 
+Viewer* viewer = 0;
+
 static void error_callback(int error, const char* description)
 {
     fputs(description, stderr);
@@ -19,6 +21,14 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
+
+	if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS)
+	{
+		ElementIdList ids;
+		ids.push_back(74);
+		bool visible = viewer->is_element_visible(74);
+		viewer->set_elements_visible(ids, !visible);
+	}
 }
 
 void init()
@@ -53,7 +63,7 @@ int main()
 {
 	init();
 
-    Viewer* viewer = new Viewer();
+    viewer = new Viewer();
     viewer->init();
 	viewer->set_viewport(0, 0, window_w, window_h);
 	viewer->load_model("http://christian-test.s3.amazonaws.com/SampleHouseTest/geomInfo.json");

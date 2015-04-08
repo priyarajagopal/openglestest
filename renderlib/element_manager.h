@@ -25,6 +25,8 @@ public:
 	void set_loading(bool);
 	bool is_loading() const { return loading; }
 
+	ElementPtr get_element_by_id(const ElementId& id) const;
+
 	std::map<ElementId, ElementPtr> elements;
 	BufferPtrList buffers;
 	Box bbox;
