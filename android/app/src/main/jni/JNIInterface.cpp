@@ -19,8 +19,7 @@ JNIEXPORT void JNICALL Java_com_invicara_androidtest_JNIInterface_on_1surface_1c
             delete viewer;
         viewer = new Viewer();
         viewer->init();
-        viewer->fit_camera_to_box(-14.401161193847656,-9.856366157531738,-1.0,15.459482192993164,19.143634796142578,28.825000762939453);
-        viewer->load_model("http://localhost:8081/models/SampleHouseTest/14.0.json");
+        viewer->load_model("http://localhost:8081/models/SampleHouseTest/geomInfo.json");
     } catch (const std::exception& e) {
         throwJavaException(env, e.what());
     } catch (...) {
