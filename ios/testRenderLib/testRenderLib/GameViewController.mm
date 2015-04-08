@@ -39,7 +39,9 @@ using namespace renderlib;
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    
+#if !(TARGET_IPHONE_SIMULATOR)
+    view.drawableMultisample = GLKViewDrawableMultisample4X;
+#endif
     [self setupGL];
 }
 
