@@ -19,7 +19,7 @@ JNIEXPORT void JNICALL Java_com_invicara_androidtest_JNIInterface_on_1surface_1c
             delete viewer;
         viewer = new Viewer();
         viewer->init();
-        viewer->load_model("http://localhost:8081/models/SampleHouseTest/geomInfo.json");
+        viewer->load_model("http://christian-test.s3.amazonaws.com/SampleHouseTest/geomInfo.json");
     } catch (const std::exception& e) {
         throwJavaException(env, e.what());
     } catch (...) {
