@@ -92,6 +92,7 @@ using namespace renderlib;
      
 - (void)loadModel
 {
+    NSLog(@"%s. Will Load model from URL is %@",__func__,self.urlToLoad);
     _viewer->load_model([self.urlToLoad cStringUsingEncoding:NSASCIIStringEncoding]);
         
 }

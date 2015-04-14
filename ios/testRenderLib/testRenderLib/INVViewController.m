@@ -45,9 +45,6 @@
 
 
 #pragma mark - IBActions
-- (IBAction)onEditDone:(id)sender {
-    [self performSegueWithIdentifier:@"ShowViewerSegue" sender:self];
-}
 
 - (IBAction)onLoadRequested:(id)sender {
     [self performSegueWithIdentifier:@"ShowViewerSegue" sender:self];
